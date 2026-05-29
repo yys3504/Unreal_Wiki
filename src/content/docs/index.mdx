@@ -1,0 +1,36 @@
+---
+title: Unreal Wiki
+description: 링크만 있으면 누구나 볼 수 있는 언리얼 엔진 한국어 지식 베이스. 게임을 만들며 배우는 C++ 기초부터 시작합니다.
+template: splash
+hero:
+  tagline: 게임을 만들며 배우는 언리얼 C++ — 그리고 점점 자라나는 언리얼 지식 베이스.
+  actions:
+    - text: 시작하기
+      link: /start/
+      icon: right-arrow
+    - text: C++ 코스 보기
+      link: /cpp-course/
+      variant: minimal
+      icon: open-book
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+<CardGrid stagger>
+  <Card title="게임으로 배운다" icon="rocket">
+    하나의 간단한 게임(Arena Survivor)을 한 단계씩 만들어 가며 언리얼 C++의 핵심을
+    익힙니다. 모든 단계는 그 자체로 플레이 가능합니다.
+  </Card>
+  <Card title="레퍼런스로 확장" icon="open-book">
+    게임플레이·블루프린트·렌더링·네트워킹·툴 등 섹션이 미리 예약되어 있어, 위키가
+    커져도 재구조화 없이 채워 넣습니다.
+  </Card>
+  <Card title="링크 하나면 끝" icon="external">
+    로그인 없이 누구나 열람. 마크다운 + Git으로 관리되어 버전 이력과 이식성이
+    보장됩니다.
+  </Card>
+  <Card title="코드가 읽기 좋다" icon="pencil">
+    VS Code급 문법 강조, 복사 버튼, 줄 강조, .h/.cpp 파일명 프레임으로 C++ 예제를
+    또렷하게 보여줍니다.
+  </Card>
+</CardGrid>

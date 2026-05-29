@@ -1,0 +1,41 @@
+/* ──────────────────────────────────────────────────────────────
+   Unreal Wiki — 커스텀 테마
+   Starlight CSS 변수만 덮어써서 업그레이드 안전성을 유지한다.
+   참고: https://starlight.astro.build/guides/css-and-tailwind/
+   ────────────────────────────────────────────────────────────── */
+
+:root {
+  /* 본문 폰트: 한국어 가독성 우선(Pretendard) → 시스템 폴백 */
+  --sl-font:
+    'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont,
+    'Apple SD Gothic Neo', system-ui, 'Segoe UI', Roboto, 'Helvetica Neue',
+    'Malgun Gothic', sans-serif;
+
+  /* 코드 폰트: 영문 모노 + 한글 주석 폴백 */
+  --sl-font-mono:
+    'JetBrains Mono', 'Cascadia Code', Consolas, 'D2Coding', ui-monospace,
+    SFMono-Regular, Menlo, monospace;
+}
+
+/* 브랜드 강조색(아쿠아/언리얼 느낌). 필요시 자유롭게 조정. */
+:root {
+  --sl-color-accent-low: #022c33;
+  --sl-color-accent: #1a93a8;
+  --sl-color-accent-high: #b8e6ee;
+}
+:root[data-theme='light'] {
+  --sl-color-accent-low: #c8eef4;
+  --sl-color-accent: #0e7c8e;
+  --sl-color-accent-high: #053b44;
+}
+
+/* 본문 가독성: 긴 한국어 문단의 줄 간격을 약간 넉넉하게 */
+.sl-markdown-content {
+  line-height: 1.75;
+}
+
+/* 코드 블록 본문은 줄 간격을 조금 좁혀 밀도 유지 */
+.sl-markdown-content :not(pre) > code,
+.sl-markdown-content pre {
+  line-height: 1.55;
+}

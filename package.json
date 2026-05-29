@@ -1,0 +1,20 @@
+{
+  "name": "ue-wiki",
+  "version": "0.1.0",
+  "type": "module",
+  "private": true,
+  "description": "Unreal Engine 한국어 위키 — 게임으로 배우는 C++ 기초 + 확장형 지식 베이스 (Astro Starlight)",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/starlight": "^0.39.2",
+    "astro": "^6.4.2",
+    "sharp": "^0.34.5"
+  }
+}

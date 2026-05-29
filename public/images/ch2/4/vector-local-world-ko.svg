@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="740" viewBox="0 0 1280 740">
+  <defs>
+    <linearGradient id="bg2" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1280" height="740" fill="url(#bg2)"/>
+  <text x="56" y="82" fill="#e2e8f0" font-family="Segoe UI, Arial" font-size="40" font-weight="700">Vector로 보는 Local / World 이동 차이</text>
+
+  <rect x="56" y="132" width="560" height="538" rx="18" fill="#111827" stroke="#334155"/>
+  <text x="90" y="188" fill="#93c5fd" font-family="Segoe UI, Arial" font-size="30" font-weight="700">World Offset</text>
+  <text x="90" y="224" fill="#94a3b8" font-family="Segoe UI, Arial" font-size="22">FVector(1,0,0)은 항상 월드 X+ 방향</text>
+
+  <g transform="translate(326,430)">
+    <line x1="-180" y1="0" x2="180" y2="0" stroke="#475569" stroke-width="2"/>
+    <line x1="0" y1="-150" x2="0" y2="150" stroke="#475569" stroke-width="2"/>
+    <circle cx="0" cy="0" r="20" fill="#22d3ee" stroke="#99f6e4" stroke-width="3"/>
+    <line x1="20" y1="0" x2="150" y2="0" stroke="#f97316" stroke-width="4"/>
+    <polygon points="196,0 150,-10 150,10" fill="#f97316"/>
+    <text x="-38" y="-36" fill="#e2e8f0" font-family="Segoe UI, Arial" font-size="22" font-weight="700">액터</text>
+    <text x="38" y="-14" fill="#fdba74" font-family="Segoe UI, Arial" font-size="22" font-weight="700">이동 벡터</text>
+  </g>
+
+  <rect x="666" y="132" width="560" height="538" rx="18" fill="#111827" stroke="#334155"/>
+  <text x="700" y="188" fill="#86efac" font-family="Segoe UI, Arial" font-size="30" font-weight="700">Local Offset</text>
+  <text x="700" y="224" fill="#94a3b8" font-family="Segoe UI, Arial" font-size="22">같은 FVector(1,0,0)이라도 액터 전방 기준으로 이동</text>
+
+  <g transform="translate(936,430)">
+    <line x1="-180" y1="0" x2="180" y2="0" stroke="#475569" stroke-width="2" opacity="0.3"/>
+    <line x1="0" y1="-150" x2="0" y2="150" stroke="#475569" stroke-width="2" opacity="0.3"/>
+    <g transform="rotate(-32)">
+      <circle cx="0" cy="0" r="20" fill="#22d3ee" stroke="#99f6e4" stroke-width="3"/>
+      <line x1="20" y1="0" x2="150" y2="0" stroke="#f97316" stroke-width="4"/>
+      <polygon points="196,0 150,-10 150,10" fill="#f97316"/>
+      <text x="38" y="-14" fill="#fdba74" font-family="Segoe UI, Arial" font-size="22" font-weight="700">이동 벡터</text>
+    </g>
+    <text x="-44" y="-40" fill="#e2e8f0" font-family="Segoe UI, Arial" font-size="22" font-weight="700">액터</text>
+  </g>
+
+  <rect x="56" y="684" width="1170" height="38" rx="10" fill="#0b1220" stroke="#334155"/>
+  <text x="82" y="709" fill="#e2e8f0" font-family="Segoe UI, Arial" font-size="20" font-weight="700">핵심: 벡터 값이 같아도 기준 좌표계가 다르면 실제 이동 방향이 달라진다.</text>
+</svg>

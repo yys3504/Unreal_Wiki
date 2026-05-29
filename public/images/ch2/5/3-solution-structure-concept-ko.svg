@@ -1,0 +1,60 @@
+<svg width="1200" height="620" viewBox="0 0 1200 620" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">프로젝트 폴더 구조와 솔루션 구조 차이</title>
+  <desc id="desc">왼쪽은 디스크의 실제 폴더 배치, 오른쪽은 빌드와 모듈 중심의 솔루션 논리 트리를 비교한 도식입니다.</desc>
+
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="620" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F8FBFF"/>
+      <stop offset="1" stop-color="#EEF4FF"/>
+    </linearGradient>
+    <filter id="softShadow" x="0" y="0" width="1200" height="620" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-opacity="0.08"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10V0Z" fill="#3E6FEA"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="1200" height="620" rx="20" fill="url(#bg)"/>
+
+  <text x="60" y="72" fill="#1C2536" font-size="34" font-weight="800" font-family="Pretendard, Noto Sans KR, Segoe UI, Arial, sans-serif">프로젝트 폴더 구조 vs 솔루션 구조</text>
+  <text x="60" y="108" fill="#4A5A73" font-size="19" font-weight="500" font-family="Pretendard, Noto Sans KR, Segoe UI, Arial, sans-serif">같은 프로젝트를 서로 다른 관점으로 보여주는 두 화면입니다.</text>
+
+  <rect x="50" y="140" width="470" height="430" rx="18" fill="#FFFFFF" stroke="#D9E3F4" filter="url(#softShadow)"/>
+  <rect x="680" y="140" width="470" height="430" rx="18" fill="#FFFFFF" stroke="#D9E3F4" filter="url(#softShadow)"/>
+
+  <rect x="76" y="166" width="170" height="34" rx="17" fill="#ECF2FF"/>
+  <text x="92" y="189" fill="#2C5EDB" font-size="15" font-weight="700" font-family="Pretendard, Noto Sans KR, Segoe UI, Arial, sans-serif">디스크 저장 관점</text>
+  <text x="76" y="232" fill="#1D2638" font-size="24" font-weight="800" font-family="Pretendard, Noto Sans KR, Segoe UI, Arial, sans-serif">프로젝트 폴더 구조</text>
+
+  <rect x="706" y="166" width="194" height="34" rx="17" fill="#E7F7EF"/>
+  <text x="722" y="189" fill="#1E8D4F" font-size="15" font-weight="700" font-family="Pretendard, Noto Sans KR, Segoe UI, Arial, sans-serif">빌드/모듈 분석 관점</text>
+  <text x="706" y="232" fill="#1D2638" font-size="24" font-weight="800" font-family="Pretendard, Noto Sans KR, Segoe UI, Arial, sans-serif">솔루션 구조</text>
+
+  <text x="92" y="278" fill="#253149" font-size="18" font-weight="700" font-family="Consolas, Segoe UI, Arial, sans-serif">MyProject/</text>
+  <text x="120" y="312" fill="#4A5A73" font-size="17" font-family="Consolas, Segoe UI, Arial, sans-serif">├─ Content/   (에셋)</text>
+  <text x="120" y="344" fill="#4A5A73" font-size="17" font-family="Consolas, Segoe UI, Arial, sans-serif">├─ Source/    (C++ 코드)</text>
+  <text x="120" y="376" fill="#4A5A73" font-size="17" font-family="Consolas, Segoe UI, Arial, sans-serif">├─ Config/    (설정)</text>
+  <text x="120" y="408" fill="#4A5A73" font-size="17" font-family="Consolas, Segoe UI, Arial, sans-serif">├─ Plugins/   (플러그인)</text>
+  <text x="120" y="440" fill="#4A5A73" font-size="17" font-family="Consolas, Segoe UI, Arial, sans-serif">├─ Binaries/  (실행 파일)</text>
+  <text x="120" y="472" fill="#4A5A73" font-size="17" font-family="Consolas, Segoe UI, Arial, sans-serif">└─ Intermediate/ (중간 산출물)</text>
+
+  <rect x="78" y="508" width="414" height="46" rx="12" fill="#F5F8FF" stroke="#DCE6F7"/>
+  <text x="94" y="538" fill="#50607A" font-size="16" font-weight="600" font-family="Pretendard, Noto Sans KR, Segoe UI, Arial, sans-serif">파일이 실제로 어디 저장되는지 파악하기 좋음</text>
+
+  <text x="722" y="278" fill="#253149" font-size="18" font-weight="700" font-family="Consolas, Segoe UI, Arial, sans-serif">MyProject.sln</text>
+  <text x="750" y="312" fill="#4A5A73" font-size="17" font-family="Consolas, Segoe UI, Arial, sans-serif">├─ Engine      (엔진 모듈)</text>
+  <text x="750" y="344" fill="#4A5A73" font-size="17" font-family="Consolas, Segoe UI, Arial, sans-serif">├─ Games       (프로젝트 코드)</text>
+  <text x="750" y="376" fill="#4A5A73" font-size="17" font-family="Consolas, Segoe UI, Arial, sans-serif">├─ Programs    (UHT/UBT 도구)</text>
+  <text x="750" y="408" fill="#4A5A73" font-size="17" font-family="Consolas, Segoe UI, Arial, sans-serif">├─ Rules       (Build/Target 규칙)</text>
+  <text x="750" y="440" fill="#4A5A73" font-size="17" font-family="Consolas, Segoe UI, Arial, sans-serif">└─ Visualizers (디버깅 표시 설정)</text>
+
+  <rect x="708" y="508" width="414" height="46" rx="12" fill="#ECF9F1" stroke="#D2EEDC"/>
+  <text x="724" y="538" fill="#3F6B55" font-size="16" font-weight="600" font-family="Pretendard, Noto Sans KR, Segoe UI, Arial, sans-serif">무엇이 함께 빌드되는지 파악하기 좋음</text>
+
+  <line x1="548" y1="356" x2="650" y2="356" stroke="#3E6FEA" stroke-width="4" marker-end="url(#arrow)"/>
+  <rect x="530" y="296" width="138" height="34" rx="17" fill="#ECF2FF"/>
+  <text x="548" y="318" fill="#2C5EDB" font-size="14" font-weight="700" font-family="Pretendard, Noto Sans KR, Segoe UI, Arial, sans-serif">관점 재구성</text>
+
+  <text x="600" y="592" text-anchor="middle" fill="#5B6A84" font-size="15" font-weight="600" font-family="Pretendard, Noto Sans KR, Segoe UI, Arial, sans-serif">같은 코드베이스를 저장 관점에서 볼지, 빌드/모듈 관점에서 볼지의 차이</text>
+</svg>

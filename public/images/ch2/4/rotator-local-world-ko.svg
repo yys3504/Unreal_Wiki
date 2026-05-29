@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="740" viewBox="0 0 1280 740">
+  <defs>
+    <linearGradient id="bg3" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0b1326"/>
+      <stop offset="100%" stop-color="#1a2943"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1280" height="740" fill="url(#bg3)"/>
+  <text x="56" y="82" fill="#e2e8f0" font-family="Segoe UI, Arial" font-size="40" font-weight="700">Rotator로 보는 Local / World 회전 차이</text>
+
+  <rect x="56" y="132" width="560" height="538" rx="18" fill="#111827" stroke="#334155"/>
+  <text x="90" y="188" fill="#93c5fd" font-family="Segoe UI, Arial" font-size="30" font-weight="700">World 기준 회전</text>
+  <text x="90" y="224" fill="#94a3b8" font-family="Segoe UI, Arial" font-size="22">월드 기준 각도로 즉시 정렬</text>
+
+  <g transform="translate(336,424)">
+    <line x1="-180" y1="0" x2="180" y2="0" stroke="#475569" stroke-width="2"/>
+    <line x1="0" y1="-150" x2="0" y2="150" stroke="#475569" stroke-width="2"/>
+    <polygon points="0,-48 96,0 0,48 -96,0" fill="#1e293b" stroke="#64748b" stroke-width="4"/>
+    <text x="-62" y="-72" fill="#e2e8f0" font-family="Segoe UI, Arial" font-size="22" font-weight="700">결과 방향</text>
+    <text x="112" y="8" fill="#fca5a5" font-family="Segoe UI, Arial" font-size="22" font-weight="700">Yaw=90°</text>
+  </g>
+
+  <rect x="666" y="132" width="560" height="538" rx="18" fill="#111827" stroke="#334155"/>
+  <text x="700" y="188" fill="#86efac" font-family="Segoe UI, Arial" font-size="30" font-weight="700">Local 기준 회전</text>
+  <text x="700" y="224" fill="#94a3b8" font-family="Segoe UI, Arial" font-size="22">현재 자세 기준으로 회전을 누적</text>
+
+  <g transform="translate(946,424)">
+    <polygon points="0,-48 96,0 0,48 -96,0" fill="#1e293b" stroke="#64748b" stroke-width="4" transform="rotate(-18)"/>
+    <polygon points="0,-48 96,0 0,48 -96,0" fill="none" stroke="#22c55e" stroke-width="4" stroke-dasharray="8 6" transform="rotate(24)"/>
+    <text x="-160" y="-84" fill="#e2e8f0" font-family="Segoe UI, Arial" font-size="22" font-weight="700">이전 자세에서 누적 회전</text>
+    <text x="-164" y="-52" fill="#86efac" font-family="Segoe UI, Arial" font-size="21" font-weight="700">DeltaRot 추가 적용</text>
+  </g>
+
+  <rect x="56" y="684" width="1170" height="38" rx="10" fill="#0b1220" stroke="#334155"/>
+  <text x="82" y="709" fill="#e2e8f0" font-family="Segoe UI, Arial" font-size="20" font-weight="700">핵심: Rotator 값도 기준 좌표계가 다르면 결과 자세가 완전히 달라질 수 있다.</text>
+</svg>

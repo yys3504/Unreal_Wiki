@@ -1,0 +1,55 @@
+---
+title: "2-3. Rotator 이해와 활용"
+description: 오브젝트의 회전을 각도로 표현하는 FRotator(Pitch/Yaw/Roll)의 개념과 축 기준을 정리합니다.
+section: "10"
+type: lesson
+status: stable
+ue_version: "5.6"
+tags: ["beginner", "cpp"]
+sidebar:
+  order: 3
+---
+
+import Figure from '@components/Figure.astro';
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+**Rotator**는 오브젝트가 현재 어느 방향을 향하는지 **각도(Degree)** 로 표현하는 타입입니다. 이번
+페이지는 핵심을 빠르게 잡을 수 있도록 **축 기준과 구성 요소**에 집중합니다.
+
+## Rotator의 정의
+
+**`FRotator`** 는 회전 상태를 Pitch·Yaw·Roll 세 각도로 나타내는 구조체입니다.
+
+```cpp
+FRotator NewRotation(0.f, 90.f, 0.f);
+Actor->SetActorRotation(NewRotation);
+```
+
+:::caution[생성자 인자 순서 주의]
+`FRotator`의 생성자 순서는 **`FRotator(Pitch, Yaw, Roll)`** 입니다. Pitch가 가장 먼저라는 점을
+헷갈리기 쉬우니 주의하세요.
+:::
+
+<Figure src="/images/ch2/3/rotator-basics-ko.svg" alt="Rotator 기본 축 개념 한국어 이미지" caption="Rotator의 기본 축 개념" />
+
+:::note
+명칭만 외우기보다, 각 항목이 **어떤 축과 연결되는지** 함께 기억해야 실수를 줄일 수 있습니다.
+:::
+
+## Pitch, Yaw, Roll 축 이해
+
+<CardGrid>
+  <Card title="Roll (X축)">몸을 비트는 느낌의 기울기 회전. 예: 비행체가 좌우로 기울어지는 표현.</Card>
+  <Card title="Yaw (Z축)">좌우 방향 전환 회전. 예: 캐릭터가 바라보는 방향을 좌/우로 바꾸는 동작.</Card>
+  <Card title="Pitch (Y축)">위아래 시선을 조절하는 회전. 예: 카메라 상하 조준, 포탑 고각/저각 조정.</Card>
+  <Card title="축 기준 정리">
+
+  - **X**: Forward
+  - **Y**: Right
+  - **Z**: Up
+  - Roll → X, Pitch → Y, Yaw → Z
+
+  </Card>
+</CardGrid>
+
+<Figure src="/images/ch2/3/rotator-components-ko.svg" alt="Pitch Yaw Roll 구성 요소 한국어 이미지" caption="Pitch / Yaw / Roll 구성 요소" />

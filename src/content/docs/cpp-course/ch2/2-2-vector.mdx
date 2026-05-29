@@ -1,0 +1,66 @@
+---
+title: "2-2. Vector 이해와 연산"
+description: 크기와 방향을 함께 가진 Vector(FVector)의 정의, 게임에서의 쓰임, 핵심 연산을 정리하고 인터랙티브 시뮬레이터로 직접 확인합니다.
+section: "10"
+type: lesson
+status: stable
+ue_version: "5.6"
+tags: ["beginner", "cpp"]
+sidebar:
+  order: 2
+---
+
+import Figure from '@components/Figure.astro';
+import VectorSimulator from '@components/VectorSimulator.astro';
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+**Vector**는 크기와 방향을 함께 가진 값입니다. 설명은 이해를 돕기 위해 **2차원(X, Y)** 기준으로
+진행하지만, 같은 원리가 3차원(X, Y, Z)에도 그대로 적용됩니다.
+
+## Vector의 정의
+
+**스칼라(Scalar)** 가 크기만 가지는 값이라면, **벡터(Vector)** 는 **크기 + 방향**을 동시에 가집니다.
+
+언리얼 C++에서는 주로 **`FVector(X, Y, Z)`** 형태로 사용하며, 여기서는 먼저 2D 관점으로 X·Y
+성분에 집중합니다.
+
+- **X**: 좌우 방향
+- **Y**: 상하 방향 (2D 기준)
+
+<Figure src="/images/ch2/2/vector-basics-2d.svg" alt="2차원 벡터 좌표축과 성분 설명 이미지" caption="2D 벡터의 성분" />
+
+:::note
+3차원으로 확장하면 Z축 성분이 추가될 뿐, 연산 규칙은 동일합니다.
+:::
+
+## 게임에서 Vector가 쓰이는 곳
+
+게임 오브젝트는 공간 안에서 끊임없이 이동하고 회전합니다. 이때 **위치·속도·방향·힘** 계산의 공통
+언어가 바로 Vector입니다.
+
+<CardGrid>
+  <Card title="이동 / 속도">캐릭터 이동 방향, 발사체 속도, 넉백 벡터 계산 등에 사용합니다.</Card>
+  <Card title="방향 / 조준">카메라 전방 벡터, 타깃 방향 벡터, 에임 보정 계산에 사용합니다.</Card>
+  <Card title="물리 / 충돌">충돌 노멀(Normal), 반사(Reflection), 힘(Force) 계산에 사용합니다.</Card>
+  <Card title="거리 / 각도 판단">AI 감지 범위, 시야 판정, 오브젝트 간 거리 측정에 활용합니다.</Card>
+</CardGrid>
+
+## Vector 연산 핵심 정리
+
+아래는 2차원 기준으로 먼저 이해하고, 3차원에서는 Z 성분까지 동일하게 계산합니다.
+
+<CardGrid>
+  <Card title="덧셈 (A + B)">두 방향을 합친 결과 벡터. `FVector R = A + B;`</Card>
+  <Card title="뺄셈 (A − B)">두 점 사이의 방향 벡터를 구할 때 자주 사용. `FVector Dir = Target - Start;`</Card>
+  <Card title="스칼라 곱 (kA)">방향은 유지하고 크기만 확대/축소. `FVector Fast = Velocity * 2.0f;`</Card>
+  <Card title="정규화 (Normalize)">길이를 1로 맞춰 순수 방향만 추출. `FVector Unit = A.GetSafeNormal();`</Card>
+  <Card title="내적 (Dot)">두 벡터의 방향 유사도를 판단. `float D = FVector::DotProduct(A, B);`</Card>
+  <Card title="외적 (Cross)">3D에서 두 벡터에 수직인 벡터. `FVector N = FVector::CrossProduct(A, B);`</Card>
+</CardGrid>
+
+## 연산 시뮬레이션
+
+연산 버튼을 누르면 해당 연산의 결과만 표시됩니다. 기본 연산은 2D 기준이며, **외적(A × B)** 만 3D
+기준으로 표시됩니다. 외적 모드에서는 캔버스를 드래그해 Z축 기준으로 360도 시점을 돌려볼 수 있습니다.
+
+<VectorSimulator />

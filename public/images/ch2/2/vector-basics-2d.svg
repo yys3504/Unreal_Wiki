@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700" fill="none">
+  <rect width="1200" height="700" fill="#111722"/>
+
+  <g stroke="#223046" stroke-width="1">
+    <path d="M90 110H1110"/>
+    <path d="M90 190H1110"/>
+    <path d="M90 270H1110"/>
+    <path d="M90 350H1110"/>
+    <path d="M90 430H1110"/>
+    <path d="M90 510H1110"/>
+    <path d="M90 590H1110"/>
+
+    <path d="M160 40V640"/>
+    <path d="M260 40V640"/>
+    <path d="M360 40V640"/>
+    <path d="M460 40V640"/>
+    <path d="M560 40V640"/>
+    <path d="M660 40V640"/>
+    <path d="M760 40V640"/>
+    <path d="M860 40V640"/>
+    <path d="M960 40V640"/>
+  </g>
+
+  <g stroke-linecap="round" stroke-width="7">
+    <path d="M140 560H1060" stroke="#ef4444"/>
+    <path d="M140 560L140 70" stroke="#22c55e"/>
+  </g>
+  <g fill="#ef4444">
+    <path d="M1090 560L1038 530V590L1090 560Z"/>
+  </g>
+  <g fill="#22c55e">
+    <path d="M140 35L114 92H166L140 35Z"/>
+  </g>
+
+  <g stroke="#67a8ff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M140 560L760 300"/>
+  </g>
+  <g fill="#67a8ff">
+    <path d="M796 286L736 274L762 328L796 286Z"/>
+  </g>
+
+  <g stroke="#67a8ff" stroke-dasharray="10 10" stroke-width="3" opacity="0.75">
+    <path d="M140 560H760"/>
+    <path d="M760 560V300"/>
+  </g>
+
+  <circle cx="140" cy="560" r="10" fill="#f8fafc"/>
+  <circle cx="760" cy="300" r="10" fill="#67a8ff"/>
+
+  <g font-family="Malgun Gothic, Segoe UI, Arial, sans-serif" fill="#e2e8f0">
+    <text x="1100" y="570" font-size="34" font-weight="700">X축</text>
+    <text x="158" y="68" font-size="34" font-weight="700">Y축</text>
+
+    <text x="780" y="292" font-size="31" font-weight="700">벡터 V</text>
+    <text x="420" y="548" font-size="28">Vx (X 성분)</text>
+    <text x="774" y="446" font-size="28">Vy (Y 성분)</text>
+    <text x="154" y="598" font-size="24">원점 (0, 0)</text>
+
+    <text x="80" y="660" font-size="26" fill="#94a3b8">2차원(X, Y) 기준으로 설명하며, 3차원에서는 Z축 성분이 추가됩니다.</text>
+  </g>
+</svg>

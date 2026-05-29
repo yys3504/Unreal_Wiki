@@ -1,0 +1,182 @@
+---
+// 2-2 벡터 연산 인터랙티브 시뮬레이터. 기존 위키의 canvas 위젯을 그대로 포팅.
+// 로직은 /public/js/vector-simulator.js (요소 ID로 동작). 페이지당 1개만 배치할 것.
+---
+
+<div class="vector-sim-wrap" id="vector-sim-wrap">
+  <div class="sim-canvas-shell">
+    <canvas id="vector-sim-canvas"></canvas>
+  </div>
+
+  <div class="vector-controls-grid">
+    <label class="vector-range-field">A.x
+      <input type="range" id="vec-ax" min="-4" max="4" step="0.2" />
+      <span id="vec-ax-val">0.0</span>
+    </label>
+    <label class="vector-range-field">A.y
+      <input type="range" id="vec-ay" min="-4" max="4" step="0.2" />
+      <span id="vec-ay-val">0.0</span>
+    </label>
+    <label class="vector-range-field cross-only-control">A.z (외적 전용)
+      <input type="range" id="vec-az" min="-4" max="4" step="0.2" />
+      <span id="vec-az-val">0.0</span>
+    </label>
+    <label class="vector-range-field">B.x
+      <input type="range" id="vec-bx" min="-4" max="4" step="0.2" />
+      <span id="vec-bx-val">0.0</span>
+    </label>
+    <label class="vector-range-field">B.y
+      <input type="range" id="vec-by" min="-4" max="4" step="0.2" />
+      <span id="vec-by-val">0.0</span>
+    </label>
+    <label class="vector-range-field cross-only-control">B.z (외적 전용)
+      <input type="range" id="vec-bz" min="-4" max="4" step="0.2" />
+      <span id="vec-bz-val">0.0</span>
+    </label>
+    <label class="vector-range-field">Scalar k
+      <input type="range" id="vec-scalar" min="-2" max="2" step="0.1" />
+      <span id="vec-scalar-val">0.0</span>
+    </label>
+  </div>
+
+  <div class="vector-op-buttons">
+    <button class="vector-op-btn active" data-mode="add" type="button">A + B</button>
+    <button class="vector-op-btn" data-mode="sub" type="button">A - B</button>
+    <button class="vector-op-btn" data-mode="scalar" type="button">kA</button>
+    <button class="vector-op-btn" data-mode="normalize" type="button">normalize(A)</button>
+    <button class="vector-op-btn" data-mode="dot" type="button">A · B</button>
+    <button class="vector-op-btn" data-mode="cross" type="button">A x B</button>
+  </div>
+
+  <div class="vector-readout-grid">
+    <div class="vector-readout-card">
+      <span>현재 연산</span>
+      <strong id="vec-formula">R = A + B</strong>
+    </div>
+    <div class="vector-readout-card">
+      <span>결과</span>
+      <strong id="vec-result">(0.00, 0.00)</strong>
+    </div>
+  </div>
+  <p id="vec-result-hint" class="vec-hint">A와 B를 더한 결과 벡터입니다.</p>
+</div>
+
+<script is:inline src="/js/vector-simulator.js" defer></script>
+
+<style>
+  .vector-sim-wrap {
+    padding: 18px;
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 12px;
+    background: var(--sl-color-gray-6);
+    margin: 1rem 0 1.5rem;
+  }
+  .sim-canvas-shell {
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-top: 4px;
+    background: #111722;
+  }
+  #vector-sim-canvas {
+    display: block;
+    width: 100%;
+    min-height: 430px;
+    cursor: default;
+    touch-action: none;
+  }
+  .vector-sim-wrap.cross-mode #vector-sim-canvas {
+    cursor: grab;
+  }
+  .vector-sim-wrap.cross-mode.dragging #vector-sim-canvas {
+    cursor: grabbing;
+  }
+  .vector-controls-grid {
+    margin-top: 14px;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+  }
+  .vector-range-field {
+    display: grid;
+    gap: 6px;
+    font-size: 0.87rem;
+    color: var(--sl-color-gray-2);
+    background: var(--sl-color-gray-7, var(--sl-color-gray-6));
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 10px;
+    padding: 10px;
+  }
+  .vector-range-field input[type='range'] {
+    width: 100%;
+    accent-color: var(--sl-color-accent);
+  }
+  .vector-range-field span {
+    font-family: var(--sl-font-mono);
+    color: var(--sl-color-text);
+  }
+  .cross-only-control {
+    display: none;
+  }
+  .vector-sim-wrap.cross-mode .cross-only-control {
+    display: grid;
+  }
+  .vector-op-buttons {
+    margin-top: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .vector-op-btn {
+    border: 1px solid var(--sl-color-gray-5);
+    background: var(--sl-color-gray-7, var(--sl-color-gray-6));
+    color: var(--sl-color-text);
+    border-radius: 999px;
+    padding: 6px 12px;
+    cursor: pointer;
+    font-size: 0.84rem;
+    font-weight: 600;
+  }
+  .vector-op-btn:hover {
+    background: var(--sl-color-gray-5);
+  }
+  .vector-op-btn.active {
+    background: var(--sl-color-accent);
+    color: #fff;
+    border-color: var(--sl-color-accent);
+  }
+  .vector-readout-grid {
+    margin-top: 12px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+  .vector-readout-card {
+    border: 1px solid var(--sl-color-gray-5);
+    background: var(--sl-color-gray-7, var(--sl-color-gray-6));
+    border-radius: 10px;
+    padding: 10px 12px;
+    display: grid;
+    gap: 4px;
+  }
+  .vector-readout-card span {
+    font-size: 0.78rem;
+    color: var(--sl-color-gray-3);
+  }
+  .vector-readout-card strong {
+    font-family: var(--sl-font-mono);
+    font-size: 0.98rem;
+    color: var(--sl-color-text);
+  }
+  .vec-hint {
+    margin-top: 10px;
+    font-size: 0.9rem;
+    color: var(--sl-color-gray-3);
+  }
+  @media (max-width: 900px) {
+    .vector-controls-grid,
+    .vector-readout-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

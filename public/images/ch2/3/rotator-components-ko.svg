@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720">
+  <defs>
+    <linearGradient id="bg2" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#101828"/>
+      <stop offset="100%" stop-color="#17263f"/>
+    </linearGradient>
+    <linearGradient id="card1" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1d4ed8"/>
+      <stop offset="100%" stop-color="#2563eb"/>
+    </linearGradient>
+    <linearGradient id="card2" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ca8a04"/>
+      <stop offset="100%" stop-color="#eab308"/>
+    </linearGradient>
+    <linearGradient id="card3" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f766e"/>
+      <stop offset="100%" stop-color="#14b8a6"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1280" height="720" fill="url(#bg2)"/>
+
+  <text x="64" y="90" fill="#e2e8f0" font-family="Segoe UI, Arial" font-size="42" font-weight="700">Pitch / Yaw / Roll 구성 요소</text>
+  <text x="64" y="132" fill="#94a3b8" font-family="Segoe UI, Arial" font-size="24">회전 방향 화살표 없이, 축-의미 대응만 기억하기 쉽게 정리</text>
+
+  <rect x="64" y="188" width="360" height="426" rx="18" fill="url(#card1)"/>
+  <text x="98" y="252" fill="#eff6ff" font-family="Segoe UI, Arial" font-size="38" font-weight="700">Roll</text>
+  <text x="98" y="298" fill="#dbeafe" font-family="Segoe UI, Arial" font-size="26">X축 회전</text>
+  <text x="98" y="358" fill="#eff6ff" font-family="Segoe UI, Arial" font-size="24">오브젝트를 비트는 느낌의 회전</text>
+  <text x="98" y="398" fill="#eff6ff" font-family="Segoe UI, Arial" font-size="24">예: 비행체 좌우 기울기</text>
+
+  <rect x="460" y="188" width="360" height="426" rx="18" fill="url(#card2)"/>
+  <text x="494" y="252" fill="#451a03" font-family="Segoe UI, Arial" font-size="38" font-weight="700">Yaw</text>
+  <text x="494" y="298" fill="#78350f" font-family="Segoe UI, Arial" font-size="26">Z축 회전</text>
+  <text x="494" y="358" fill="#451a03" font-family="Segoe UI, Arial" font-size="24">좌우 방향을 바꾸는 회전</text>
+  <text x="494" y="398" fill="#451a03" font-family="Segoe UI, Arial" font-size="24">예: 캐릭터 방향 전환</text>
+
+  <rect x="856" y="188" width="360" height="426" rx="18" fill="url(#card3)"/>
+  <text x="890" y="252" fill="#ecfeff" font-family="Segoe UI, Arial" font-size="38" font-weight="700">Pitch</text>
+  <text x="890" y="298" fill="#ccfbf1" font-family="Segoe UI, Arial" font-size="26">Y축 회전</text>
+  <text x="890" y="358" fill="#ecfeff" font-family="Segoe UI, Arial" font-size="24">위아래 고개를 드는 회전</text>
+  <text x="890" y="398" fill="#ecfeff" font-family="Segoe UI, Arial" font-size="24">예: 카메라 상하 조준</text>
+
+  <rect x="64" y="640" width="1152" height="48" rx="12" fill="#0f172a" stroke="#334155"/>
+  <text x="96" y="672" fill="#e2e8f0" font-family="Segoe UI, Arial" font-size="23" font-weight="700">기억 포인트: 생성자 순서는 FRotator(Pitch, Yaw, Roll)</text>
+</svg>

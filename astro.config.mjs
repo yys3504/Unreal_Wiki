@@ -33,7 +33,15 @@ export default defineConfig({
       // 폴더명은 깔끔한 슬러그(URL용), 라벨에만 번호를 붙여 정렬·멘탈모델을 유지.
       sidebar: [
         { label: '00 · 시작하기', items: [{ autogenerate: { directory: 'start' } }] },
-        { label: '10 · 게임으로 배우는 C++ 기초', items: [{ autogenerate: { directory: 'cpp-course' } }] },
+        {
+          label: '10 · 언리얼 C++',
+          items: [
+            { label: '코스 소개', link: '/cpp-course/' },
+            { label: 'CH 1 · 시작하기', items: [{ autogenerate: { directory: 'cpp-course/ch1' } }] },
+            { label: 'CH 2 · 프로젝트 세팅 / Vector·Rotator', items: [{ autogenerate: { directory: 'cpp-course/ch2' } }] },
+            { label: 'CH 3 · Actor', items: [{ autogenerate: { directory: 'cpp-course/ch3' } }] },
+          ],
+        },
         { label: '20 · 게임플레이 시스템', items: [{ autogenerate: { directory: 'gameplay-systems' } }] },
         { label: '30 · 블루프린트 & C++ 연동', items: [{ autogenerate: { directory: 'blueprint-interop' } }] },
         { label: '40 · 렌더링 & 그래픽스', items: [{ autogenerate: { directory: 'rendering' } }] },

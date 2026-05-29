@@ -1,0 +1,40 @@
+---
+// 캡션이 달린 이미지(스크린샷) 카드. 기존 .install-media 스타일을 Starlight에 맞게 옮긴 것.
+// 사용: <Figure src="/images/ch1/ch1-3-transform.png" alt="Transform 화면" caption="Details 탭의 Transform" />
+interface Props {
+  /** public/ 기준 절대 경로 (예: /images/ch1/foo.png) */
+  src: string;
+  /** 대체 텍스트 (한국어로, 필수) */
+  alt: string;
+  /** 이미지 아래 캡션 (선택) */
+  caption?: string;
+}
+const { src, alt, caption } = Astro.props;
+---
+
+<figure class="ue-figure">
+  <img src={src} alt={alt} loading="lazy" />
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>
+
+<style>
+  .ue-figure {
+    margin: 1rem 0 1.5rem;
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 10px;
+    background: var(--sl-color-gray-6);
+    padding: 10px;
+  }
+  .ue-figure img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+  .ue-figure figcaption {
+    margin-top: 0.5rem;
+    font-size: 0.86rem;
+    color: var(--sl-color-gray-3);
+    text-align: center;
+  }
+</style>

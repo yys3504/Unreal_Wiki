@@ -1,0 +1,57 @@
+---
+// 구글 드라이브 영상 임베드 (반응형 16:9). 기존 위키 영상을 그대로 재사용한다.
+// 사용: <DriveVideo id="파일ID" label="실습 영상" />
+interface Props {
+  /** 구글 드라이브 파일 ID (공유 링크 .../file/d/<ID>/view 의 ID 부분) */
+  id: string;
+  /** 영상 위에 붙는 라벨 (선택) */
+  label?: string;
+}
+const { id, label } = Astro.props;
+const src = `https://drive.google.com/file/d/${id}/preview`;
+---
+
+<figure class="drive-video">
+  {label && <figcaption class="drive-video__label">{label}</figcaption>}
+  <div class="drive-video__frame">
+    <iframe
+      src={src}
+      allow="autoplay; fullscreen"
+      allowfullscreen
+      loading="lazy"
+      title={label ?? 'Google Drive 영상'}></iframe>
+  </div>
+</figure>
+
+<style>
+  .drive-video {
+    margin: 1rem 0 1.5rem;
+  }
+  .drive-video__label {
+    display: inline-block;
+    margin: 0 0 0.5rem;
+    padding: 3px 10px;
+    border-radius: 999px;
+    background: var(--sl-color-accent-low);
+    color: var(--sl-color-accent-high);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+  .drive-video__frame {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    border-radius: 12px;
+    border: 1px solid var(--sl-color-gray-5);
+    background: #000;
+  }
+  .drive-video__frame iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+</style>

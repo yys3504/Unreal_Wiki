@@ -16,3 +16,4 @@ sidebar:
 - 위키 초기 골격 구축: Astro Starlight 기반, 정보구조(00~90) 스켈레톤, 페이지 템플릿,
   스타일 가이드, 태그 어휘, 버전 정책 정리.
 - C++ 코스(10) 개요 및 Arena Survivor 모듈 로드맵(8개) 작성. 레슨 본문은 추후 추가 예정.
+- Cloudflare Pages(직접 업로드)로 첫 배포 — https://unreal-wiki.pages.dev 공개. 갱신은 `npm run deploy`.

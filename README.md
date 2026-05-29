@@ -40,10 +40,28 @@ npm run preview    # 빌드 결과 미리보기
 `src/content/docs/meta/_template.md`를 복사 → frontmatter 채우기 → 파일명을 슬러그로.
 규칙은 사이트의 **90 · 메타 > 스타일 가이드 / 페이지 템플릿** 참고.
 
-## 배포 (Cloudflare Pages)
+## 배포 (Cloudflare Pages · 직접 업로드)
 
-1. 이 저장소를 GitHub에 push.
-2. Cloudflare Pages → Connect to Git → 저장소 선택.
-3. Framework preset: **Astro** / Build command: `npm run build` / Output dir: `dist`.
-4. 최초 배포 → `https://<프로젝트>.pages.dev` (공개, 로그인 불필요).
-5. (선택) 커스텀 도메인 연결 후 `astro.config.mjs`의 `SITE_URL`을 해당 도메인으로 교체.
+현재 라이브: **https://unreal-wiki.pages.dev** (공개, 로그인 불필요).
+Wrangler 직접 업로드 방식으로 배포합니다.
+
+최초 1회만:
+
+```bash
+npx wrangler login    # 브라우저에서 Cloudflare 로그인
+```
+
+이후 업데이트할 때마다 (빌드 + 배포 한 번에):
+
+```bash
+npm run deploy
+```
+
+### (선택) GitHub 연동 자동 배포로 전환
+
+Cloudflare 대시보드 → **Workers & Pages → Pages → Connect to Git** 로 저장소를 연결하면
+`git push` 시 자동 배포됩니다. (Framework preset: **Astro** / Build: `npm run build` / Output: `dist`)
+
+### (선택) 커스텀 도메인
+
+프로젝트 → Custom domains에서 연결(무료 SSL 자동) 후 `astro.config.mjs`의 `SITE_URL`을 그 도메인으로 교체.

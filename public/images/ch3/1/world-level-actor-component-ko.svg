@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="760" viewBox="0 0 1280 760">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0c1424"/>
+      <stop offset="100%" stop-color="#1a2943"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1280" height="760" fill="url(#bg)"/>
+
+  <text x="640" y="76" text-anchor="middle" fill="#e2e8f0" font-family="Segoe UI, Arial" font-size="40" font-weight="700">World / Level / Actor / Component</text>
+  <text x="640" y="114" text-anchor="middle" fill="#94a3b8" font-family="Segoe UI, Arial" font-size="24">언리얼 기본 계층 구조</text>
+
+  <rect x="70" y="150" width="1140" height="560" rx="16" fill="#9ca3af" fill-opacity="0.82" stroke="#3b82f6" stroke-width="6"/>
+  <text x="640" y="206" text-anchor="middle" fill="#f8fafc" font-family="Segoe UI, Arial" font-size="50" font-weight="700">World</text>
+
+  <rect x="130" y="248" width="1020" height="430" rx="8" fill="#52525b" fill-opacity="0.86" stroke="#3f3f46" stroke-width="5"/>
+  <text x="640" y="302" text-anchor="middle" fill="#f3f4f6" font-family="Segoe UI, Arial" font-size="48" font-weight="700">Level</text>
+
+  <rect x="210" y="370" width="340" height="248" rx="6" fill="#fca5a5" stroke="#b91c1c" stroke-width="7"/>
+  <text x="380" y="446" text-anchor="middle" fill="#ffffff" font-family="Segoe UI, Arial" font-size="50" font-weight="700">Actor</text>
+  <rect x="258" y="474" width="244" height="58" rx="4" fill="#60a5fa" stroke="#0b5394" stroke-width="6"/>
+  <text x="380" y="514" text-anchor="middle" fill="#ffffff" font-family="Segoe UI, Arial" font-size="40" font-weight="700">Component</text>
+  <rect x="258" y="546" width="244" height="58" rx="4" fill="#60a5fa" stroke="#0b5394" stroke-width="6"/>
+  <text x="380" y="586" text-anchor="middle" fill="#ffffff" font-family="Segoe UI, Arial" font-size="40" font-weight="700">Component</text>
+
+  <rect x="730" y="370" width="340" height="248" rx="6" fill="#fca5a5" stroke="#b91c1c" stroke-width="7"/>
+  <text x="900" y="446" text-anchor="middle" fill="#ffffff" font-family="Segoe UI, Arial" font-size="50" font-weight="700">Actor</text>
+  <rect x="778" y="474" width="244" height="58" rx="4" fill="#60a5fa" stroke="#0b5394" stroke-width="6"/>
+  <text x="900" y="514" text-anchor="middle" fill="#ffffff" font-family="Segoe UI, Arial" font-size="40" font-weight="700">Component</text>
+  <rect x="778" y="546" width="244" height="58" rx="4" fill="#60a5fa" stroke="#0b5394" stroke-width="6"/>
+  <text x="900" y="586" text-anchor="middle" fill="#ffffff" font-family="Segoe UI, Arial" font-size="40" font-weight="700">Component</text>
+</svg>

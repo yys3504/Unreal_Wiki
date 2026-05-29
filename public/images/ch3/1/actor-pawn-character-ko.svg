@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="800" viewBox="0 0 1280 800">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0c1424"/>
+      <stop offset="100%" stop-color="#18273f"/>
+    </linearGradient>
+    <linearGradient id="actorCard" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1d4ed8"/>
+      <stop offset="100%" stop-color="#2563eb"/>
+    </linearGradient>
+    <linearGradient id="pawnCard" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0891b2"/>
+      <stop offset="100%" stop-color="#0ea5e9"/>
+    </linearGradient>
+    <linearGradient id="charCard" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#16a34a"/>
+      <stop offset="100%" stop-color="#22c55e"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1280" height="800" fill="url(#bg)"/>
+  <text x="640" y="80" text-anchor="middle" fill="#e2e8f0" font-family="Segoe UI, Arial" font-size="40" font-weight="700">Actor · Pawn · Character 상속 계층</text>
+  <text x="640" y="118" text-anchor="middle" fill="#94a3b8" font-family="Segoe UI, Arial" font-size="24">핵심 관계만 간단하게 정리</text>
+
+  <rect x="240" y="168" width="800" height="580" rx="20" fill="#101827" stroke="#334155"/>
+  <text x="640" y="224" text-anchor="middle" fill="#bfdbfe" font-family="Segoe UI, Arial" font-size="32" font-weight="700">상속 계층</text>
+
+  <rect x="330" y="270" width="620" height="108" rx="14" fill="url(#actorCard)"/>
+  <text x="380" y="316" fill="#eff6ff" font-family="Segoe UI, Arial" font-size="36" font-weight="700">Actor</text>
+  <text x="380" y="350" fill="#dbeafe" font-family="Segoe UI, Arial" font-size="23">월드에 배치 가능한 모든 오브젝트의 기본 타입</text>
+
+  <line x1="640" y1="378" x2="640" y2="410" stroke="#93c5fd" stroke-width="6"/>
+  <polygon points="640,426 627,404 653,404" fill="#93c5fd"/>
+
+  <rect x="330" y="438" width="620" height="108" rx="14" fill="url(#pawnCard)"/>
+  <text x="380" y="484" fill="#ecfeff" font-family="Segoe UI, Arial" font-size="36" font-weight="700">Pawn</text>
+  <text x="380" y="518" fill="#cffafe" font-family="Segoe UI, Arial" font-size="23">Actor 중에서 플레이어/AI가 빙의해 조작할 수 있는 타입</text>
+
+  <line x1="640" y1="546" x2="640" y2="578" stroke="#99f6e4" stroke-width="6"/>
+  <polygon points="640,594 627,572 653,572" fill="#99f6e4"/>
+
+  <rect x="330" y="606" width="620" height="108" rx="14" fill="url(#charCard)"/>
+  <text x="380" y="652" fill="#f0fdf4" font-family="Segoe UI, Arial" font-size="36" font-weight="700">Character</text>
+  <text x="380" y="686" fill="#dcfce7" font-family="Segoe UI, Arial" font-size="21">애니메이션, 메시 등을 갖춘 캐릭터 특화 타입</text>
+</svg>

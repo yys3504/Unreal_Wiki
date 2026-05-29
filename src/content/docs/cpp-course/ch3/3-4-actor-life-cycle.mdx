@@ -1,0 +1,145 @@
+---
+title: "3-4. 액터 라이프 사이클"
+section: "10"
+type: lesson
+status: stable
+ue_version: "5.6"
+tags: ["beginner", "cpp", "actor"]
+sidebar:
+  order: 4
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+액터를 제대로 다루려면 먼저 **언제 어떤 함수가 호출되는지**를 이해해야 합니다. 같은 코드라도 어느 단계에 두느냐에 따라 동작이 완전히 달라지기 때문입니다. 이 페이지에서는 액터가 생성되어 소멸하기까지의 전체 흐름을 살펴보고, 각 단계에 어떤 코드를 두는 것이 좋은지 정리합니다.
+
+핵심 단계는 `Constructor`, `OnConstruction`, `BeginPlay`, `Tick`, `EndPlay`로 나눌 수 있으며, 이 다섯 지점만 명확히 구분해도 대부분의 액터 구조가 깔끔해집니다.
+
+## 전체 흐름
+
+액터 라이프 사이클은 상황(에디터 배치, 런타임 스폰, 레벨 전환 등)에 따라 세부 호출이 조금씩 달라집니다. 하지만 실무에서 가장 자주 마주치는 핵심 흐름은 다음 순서를 따릅니다.
+
+<CardGrid>
+  <Card title="1) Constructor">컴포넌트 생성, 기본값 초기화, 루트 컴포넌트 지정 같은 **구조 세팅**을 담당합니다.</Card>
+  <Card title="2) OnConstruction">에디터에서 액터를 배치하거나 속성 값이 바뀔 때도 호출됩니다. **에디터 가시화용 초기화**에 유용합니다.</Card>
+  <Card title="3) BeginPlay">게임 플레이가 시작되는 시점입니다. 실제 게임 로직 시작, 타이머 등록, 참조 연결 같은 **런타임 시작 작업**을 둡니다.</Card>
+  <Card title="4) Tick">매 프레임 호출됩니다. 꼭 필요할 때만 사용하고, 가능하면 이벤트나 타이머 기반으로 대체해 성능을 관리합니다.</Card>
+  <Card title="5) EndPlay → Destroyed">레벨 전환, 액터 제거, 플레이 종료 시의 정리 단계입니다. 바인딩 해제, 타이머 정리, 외부 참조 해제를 수행합니다.</Card>
+</CardGrid>
+
+:::tip[핵심 요약]
+**구조는 Constructor**, **게임 시작 로직은 BeginPlay**, **정리는 EndPlay**에 둔다고 기억하면 대부분의 구조가 깔끔해집니다.
+:::
+
+`OnConstruction`은 `Constructor` 다음, 그리고 에디터에서 값이 변경될 때마다 추가로 호출된다는 점이 특징입니다. 따라서 게임이 실행되는 동안 한 번만 실행하고 싶은 로직을 여기에 두면 의도치 않게 여러 번 실행될 수 있으니 주의하세요.
+
+## 단계별 역할
+
+각 단계에서 무엇을 해야 하고 무엇을 피해야 하는지 정리하면 다음과 같습니다.
+
+<CardGrid>
+  <Card title="Constructor에서 할 일">
+
+  - 기본 컴포넌트 생성 (`CreateDefaultSubobject`)
+  - 루트 및 부착 관계 설정 (`SetRootComponent`, `SetupAttachment`)
+  - 기본값 설정 (플래그, 초기 파라미터)
+
+  </Card>
+  <Card title="BeginPlay에서 할 일">
+
+  - 실행 중에 필요한 참조 연결
+  - 타이머 시작, Delegate 바인딩
+  - 플레이 상태에 기반한 초기 로직 시작
+
+  </Card>
+  <Card title="Tick에서 주의할 점">
+
+  - 불필요한 연산은 Tick에서 제거
+  - 조건부 Tick 활성화 고려
+  - 가능하면 타이머나 이벤트로 대체
+
+  </Card>
+  <Card title="EndPlay에서 할 일">
+
+  - 타이머와 Delegate 정리
+  - 외부 포인터 및 참조 해제
+  - 종료 사유(Reason)에 기반한 분기 처리
+
+  </Card>
+</CardGrid>
+
+:::note
+`Constructor`는 객체가 메모리에 만들어지는 시점에 호출되므로, 아직 월드(World)에 완전히 배치되지 않았거나 다른 액터와의 참조가 준비되지 않았을 수 있습니다. 따라서 다른 액터를 찾아 연결하는 작업은 `Constructor`가 아니라 `BeginPlay`에서 수행하는 것이 안전합니다.
+:::
+
+## C++ 예시
+
+아래 예시는 라이프 사이클의 핵심 지점이 실제로 어떤 순서로 호출되는지 확인하기 위한 최소 구조입니다. 헤더에서는 오버라이드할 가상 함수들을 선언하고, 소스에서는 각 함수에 로그를 남겨 호출 순서를 직접 눈으로 확인합니다.
+
+```cpp
+// Item.h
+UCLASS()
+class UNREALTUTORIAL_API AItem : public AActor
+{
+    GENERATED_BODY()
+
+public:
+    AItem();
+
+protected:
+    virtual void OnConstruction(const FTransform& Transform) override;
+    virtual void BeginPlay() override;
+    virtual void Tick(float DeltaTime) override;
+    virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
+};
+```
+
+```cpp
+// Item.cpp
+AItem::AItem()
+{
+    PrimaryActorTick.bCanEverTick = true;
+}
+
+void AItem::OnConstruction(const FTransform& Transform)
+{
+    Super::OnConstruction(Transform);
+    UE_LOG(LogTemp, Log, TEXT("OnConstruction"));
+}
+
+void AItem::BeginPlay()
+{
+    Super::BeginPlay();
+    UE_LOG(LogTemp, Warning, TEXT("BeginPlay"));
+}
+
+void AItem::Tick(float DeltaTime)
+{
+    Super::Tick(DeltaTime);
+}
+
+void AItem::EndPlay(const EEndPlayReason::Type EndPlayReason)
+{
+    Super::EndPlay(EndPlayReason);
+    UE_LOG(LogTemp, Warning, TEXT("EndPlay"));
+}
+```
+
+각 오버라이드 함수의 첫 줄에서 `Super::` 버전을 반드시 호출해야 한다는 점을 기억하세요. 부모 클래스가 수행하는 기본 초기화와 정리를 건너뛰면, 컴포넌트 등록이나 월드 정리 같은 엔진 내부 동작이 누락되어 예기치 않은 버그로 이어질 수 있습니다.
+
+:::caution
+`PrimaryActorTick.bCanEverTick = true;`로 설정하면 매 프레임 `Tick`이 호출됩니다. 실제로 매 프레임 처리할 로직이 없다면 `false`로 두어 불필요한 호출을 막는 것이 성능에 유리합니다.
+:::
+
+## 실무 팁
+
+<CardGrid>
+  <Card title="초기화 위치를 섞지 않기">Constructor와 BeginPlay의 책임을 명확히 분리하면 어떤 값이 언제 설정되는지 추적하기 쉬워 디버깅이 한결 수월해집니다.</Card>
+  <Card title="Tick 남용 주의">매 프레임 실행되는 로직은 액터 수가 늘어날수록 성능을 빠르게 소모합니다. 정말 매 프레임 필요한지 항상 점검하세요.</Card>
+  <Card title="EndPlay 정리 습관화">바인딩과 타이머 누수를 EndPlay에서 정리하는 습관을 들이면 장기적으로 추적하기 어려운 버그가 크게 줄어듭니다.</Card>
+  <Card title="로그로 호출 순서 확인">라이프 사이클 관련 문제는 각 단계에 `UE_LOG`를 찍어 호출 순서를 확인하면 대부분 빠르게 원인을 찾을 수 있습니다.</Card>
+</CardGrid>
+
+:::tip[다음 단계]
+다음 단계에서는 액터 라이프 사이클과 연계해서 **컴포넌트 라이프 사이클**도 함께 살펴봅니다. 두 흐름을 나란히 비교해 보면 엔진이 객체를 초기화하고 정리하는 큰 그림을 훨씬 깊이 이해할 수 있습니다.
+:::

@@ -1,0 +1,248 @@
+---
+title: "3-2. Actor 추가하기"
+section: "10"
+type: lesson
+status: stable
+ue_version: "5.6"
+tags: ["beginner", "cpp", "actor"]
+sidebar:
+  order: 2
+---
+
+import Figure from '@components/Figure.astro';
+import DriveVideo from '@components/DriveVideo.astro';
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+Actor 개념을 이해했다면, 이제 실제로 Actor를 만들어 레벨에 배치해 봅니다. 이 페이지에서는 블루프린트 방식과 C++ 방식을 모두 직접 실습하고, 어떤 상황에서 무엇을 선택하면 좋은지까지 연결해 정리합니다.
+
+## Actor 추가하기 (Blueprint)
+
+Actor에 대한 개념을 숙지했으니, 이제 Actor를 본격적으로 생성해 보겠습니다.
+
+Content Drawer에서 **Item**이라는 폴더를 만든 뒤, 그 안에서 우클릭하여 Blueprint Class → Actor를 선택합니다. 생성된 에셋을 선택하고 <kbd>F2</kbd>를 눌러 이름을 **BP_Item**으로 변경합니다.
+
+:::note
+이름은 자유롭게 정해도 되지만, 언리얼 코딩 규칙(Unreal Naming Convention)에서는 블루프린트 에셋 앞에 접두어 `BP_`를 붙이는 것을 권장합니다.
+:::
+
+<DriveVideo id="1ccyw_cN_jH5MKQ3QQvUrVDjB8BRl1zul" label="실습 영상" />
+
+해당 블루프린트를 더블 클릭으로 열어 보면 생소한 창이 나타나는데, 가장 먼저 관심을 가져야 할 부분은 좌측 상단의 Components 패널입니다.
+
+<Figure src="/images/ch3/2/1-component-panel.png" alt="블루프린트 에디터의 Components 패널" caption="BP_Item의 Components 패널" />
+
+보시다시피 BP_Item 액터는 **DefaultSceneRoot**라는 컴포넌트 하나를 기본으로 가지고 있습니다. 컴포넌트에도 다음과 같은 기본 계층 구조가 존재합니다.
+
+| 클래스명 | 부모 클래스 | 트랜스폼 | 시각적 형태 | 주요 기능 및 특징 |
+| --- | --- | :---: | :---: | --- |
+| UActorComponent | UObject | X | X | 최상위 컴포넌트. 위치 정보 없이 액터의 논리적 기능만 담당 |
+| USceneComponent | UActorComponent | O | X | 계층 구조의 시작. 트랜스폼 정보를 가져 월드 내 좌표를 가지며, 다른 컴포넌트를 자식으로 부착(Attach)할 수 있음 |
+| UPrimitiveComponent | USceneComponent | O | O | 물리 및 렌더링 담당. 메시를 그리거나 충돌(Collision)을 처리하는 모든 컴포넌트의 부모 |
+
+여기서 DefaultSceneRoot는 USceneComponent를 의미합니다. 앞에서 Actor는 Transform을 가진다고 설명했지만, 사실은 이 SceneComponent를 가지고 있기 때문에 트랜스폼을 가지는 것입니다.
+
+:::note
+뒤에서 자세히 설명하겠지만, C++로 Actor를 추가하면 SceneComponent가 자동으로 붙지 않습니다. 이 차이는 C++ 실습에서 다시 확인하게 됩니다.
+:::
+
+또한 Actor는 최소한 1개의 컴포넌트를 가져야 하며, 컴포넌트 계층의 중심이 되는 **RootComponent**가 반드시 있어야 합니다. 블루프린트에서는 DefaultSceneRoot라는 SceneComponent가 곧 RootComponent가 됩니다.
+
+그런데 이 상태로는 Transform만 가지는 빈 껍데기 클래스에 불과합니다. 그래서 이 액터에 시각적으로 눈에 보이는 메시(Mesh)를 부여하는 StaticMeshComponent를 추가해 보겠습니다.
+
+### StaticMeshComponent 추가하기
+
+DefaultSceneRoot를 선택한 후 Add → StaticMesh를 눌러 컴포넌트를 추가합니다.
+
+:::tip[왜 DefaultSceneRoot를 먼저 선택할까]
+DefaultSceneRoot를 선택한 상태에서 추가하면 StaticMesh가 그 아래에 부착(Attach)됩니다. 이렇게 해야 StaticMesh도 RootComponent의 트랜스폼을 기준으로 한 위치 정보를 가지게 됩니다.
+:::
+
+<Figure src="/images/ch3/2/2-staticmeshcomponent.png" alt="StaticMeshComponent 추가" caption="DefaultSceneRoot 아래에 부착된 StaticMeshComponent" />
+
+우측의 Details 패널에서는 선택한 컴포넌트의 상세 속성을 확인할 수 있습니다. 이 중 Static Mesh 항목의 드롭다운 버튼을 클릭하면 에디터가 기본 제공하는 Static Mesh들을 선택할 수 있습니다.
+
+<Figure src="/images/ch3/2/3-static-mesh.png" alt="Static Mesh 에셋 선택" caption="Details 패널에서 Static Mesh 지정 (예시: Cone)" />
+
+:::note
+예시에서는 Cone을 선택했지만, 원하는 메시를 자유롭게 골라도 됩니다.
+:::
+
+### 컴파일과 배치
+
+좌측 상단의 Compile 버튼을 눌러 변경 사항을 저장합니다. 버튼에 초록색 체크 표시가 나타나야 정상적으로 적용된 것입니다.
+
+<Figure src="/images/ch3/2/4-blueprint-compile.png" alt="블루프린트 컴파일" caption="Compile 후 초록색 체크 표시 확인" />
+
+이후 Content Drawer에서 만든 BP_Item을 레벨이 열린 뷰포트로 드래그하여, 메시가 의도한 대로 배치되는지 확인해 봅니다.
+
+<DriveVideo id="1Bx20Fvd7P37YbDFCLRezauKfWULkTDis" label="실습 영상" />
+
+## Actor 추가하기 (C++)
+
+그렇다면 C++에서는 어떻게 Actor를 추가할까요? 에디터 상단 툴바에서 Tools → New C++ Class... 로 생성할 수 있습니다.
+
+<Figure src="/images/ch3/2/5-new-cpp-class.png" alt="New C++ Class 메뉴" caption="Tools 메뉴의 New C++ Class..." />
+
+### 부모 클래스 선택
+
+클릭하면 Common Classes와 All Classes 탭으로 나뉘어 있습니다. 전자는 자주 사용하는 클래스를 쉽게 고르도록 모아 둔 화면이고, 후자는 검색을 통해 모든 클래스를 찾도록 구성된 화면입니다. 여기서 Actor를 선택하고 Next를 누릅니다.
+
+<Figure src="/images/ch3/2/6-add-c-class.png" alt="부모 클래스로 Actor 선택" caption="Add C++ Class에서 Actor 선택" />
+
+### 클래스 정보 입력
+
+Class Type은 Public으로, 이름은 Item으로 지정합니다. 경로(Path)의 끝에는 `Item/`을 추가하여 Item 폴더 안에 만들어지도록 한 뒤 Create Class를 누릅니다. (Class Type이 무엇인지는 잠시 뒤에 설명합니다.)
+
+<Figure src="/images/ch3/2/7-add-item-class.png" alt="Item 클래스 정보 입력" caption="이름 Item, 경로 끝에 Item/ 지정" />
+
+### Visual Studio 다시 로드
+
+Visual Studio에서 아래와 같은 창이 나타나면 모두 다시 로드(Reload All)를 눌러 줍니다. 이는 프로젝트가 외부에서 변경되었을 때 나타나는 안내로, 대부분의 경우 Reload All을 선택하면 됩니다.
+
+<Figure src="/images/ch3/2/8-reload-all.png" alt="Visual Studio Reload All 안내" caption="프로젝트 변경 시 Reload All 선택" />
+
+다시 로드가 끝나면 우측의 Solution Explorer에서 Source를 펼쳐 보았을 때 다음과 같은 구조가 형성됩니다.
+
+<Figure src="/images/ch3/2/9-source-structure.png" alt="Solution Explorer의 소스 구조" caption="생성된 Item 클래스의 소스 구조" />
+
+### Public과 Private의 차이
+
+C++ 프로젝트를 경험해 보신 분이라면 아시겠지만, 보통 C++에서는 모든 내용을 `.cpp`에 작성하지 않고 헤더 파일(`.h`)과 구현 파일(`.cpp`)로 분리합니다.
+
+<CardGrid>
+  <Card title="Class Type: Public">Item.h는 Public 폴더로, Item.cpp는 Private 폴더로 배치됩니다.</Card>
+  <Card title="Class Type: Private">Item.h와 Item.cpp 모두 Private 폴더로 배치됩니다.</Card>
+</CardGrid>
+
+Private 폴더에 있는 헤더는 외부 모듈에서 Include 할 수 없습니다. 따라서 단순한 프로젝트에서는 헤더를 어디서든 참조할 수 있도록 Class Type을 Public으로 지정하는 편입니다.
+
+### 생성된 헤더 코드 살펴보기
+
+생성된 헤더 파일의 내용은 다음과 같이 구성되어 있습니다.
+
+```cpp
+// Fill out your copyright notice in the Description page of Project Settings.
+
+#pragma once
+
+#include "CoreMinimal.h"
+#include "GameFramework/Actor.h"
+#include "Item.generated.h"
+
+UCLASS()
+class UNREALTUTORIAL_API AItem : public AActor
+{
+    GENERATED_BODY()
+
+public:
+    AItem();
+
+protected:
+    // Called when the game starts or when spawned
+    virtual void BeginPlay() override;
+
+public:
+    // Called every frame
+    virtual void Tick(float DeltaTime) override;
+};
+```
+
+간단히 설명하면 다음과 같습니다.
+
+<CardGrid>
+  <Card title="#pragma once">이 헤더 파일이 컴파일될 때 중복 포함되는 것을 막아 주는 C++ 지시어입니다.</Card>
+  <Card title="#include CoreMinimal.h">언리얼 엔진의 필수 코어 기능을 가져옵니다.</Card>
+  <Card title="#include GameFramework/Actor.h">부모 클래스인 AActor의 기능을 가져옵니다.</Card>
+  <Card title="UNREALTUTORIAL_API AItem">AItem 클래스가 언리얼의 기본 객체인 AActor를 상속받는다는 의미입니다. 앞의 `프로젝트이름_API`는 다른 외부 모듈에서 이 클래스를 사용할 경우를 대비한 모듈 내보내기 지정자입니다.</Card>
+  <Card title="AItem();">이 액터가 메모리에 할당될 때 컴포넌트를 붙이거나 변수의 기본값을 설정하는 생성자(Constructor) 함수입니다.</Card>
+</CardGrid>
+
+나머지 내용은 이 챕터 뒤에서 설명할 예정입니다.
+
+### 컴포넌트 선언하기
+
+이제 블루프린트에서 했던 것처럼 코드를 직접 고쳐 보겠습니다. C++에서는 SceneComponent를 자동으로 생성해 주지 않으므로, SceneComponent를 추가하고 더불어 StaticMeshComponent도 함께 추가하겠습니다. (클래스 내부에서 핵심 내용만 다룹니다.)
+
+클래스 내부 핵심 선언은 다음과 같습니다.
+
+```cpp
+private:
+    USceneComponent* Root;
+    UStaticMeshComponent* Mesh;
+```
+
+### 생성자 구현하기
+
+이제 내용을 구현하기 위해 구현 파일(`.cpp`)로 이동합니다. Visual Studio에서는 <kbd>Ctrl</kbd> + <kbd>K</kbd>, <kbd>O</kbd>로 헤더와 구현 파일을 오갈 수 있습니다.
+
+생성자를 다음과 같이 작성합니다.
+
+```cpp
+#include "Item/Item.h"
+
+AItem::AItem()
+{
+    Root = CreateDefaultSubobject<USceneComponent>(TEXT("RootScene")); // SceneComponent를 생성하고
+    SetRootComponent(Root); // SceneComponent를 루트로 설정한다.
+    Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh")); // StaticMeshComponent를 생성하고
+    Mesh->SetupAttachment(Root); // StaticMeshComponent를 SceneComponent에 붙인다.
+
+    // 경로에 있는 StaticMesh를 찾아서 MeshAsset에 저장한다.
+    // 경로가 기본 제공하는 Cone을 기준으로 작성되었기 때문에, 다른 StaticMesh는 그에 맞는 경로를 설정해야 합니다.
+    static ConstructorHelpers::FObjectFinder<UStaticMesh> MeshAsset(TEXT("/Engine/BasicShapes/Cone.Cone"));
+    if (MeshAsset.Succeeded()) // 찾았다면
+    {
+        Mesh->SetStaticMesh(MeshAsset.Object); // StaticMeshComponent의 Mesh를 MeshAsset로 설정한다.
+    }
+}
+```
+
+위 코드에서 사용한 주요 함수와 매크로를 정리하면 다음과 같습니다.
+
+<CardGrid>
+  <Card title="CreateDefaultSubobject">
+
+  - `CreateDefaultSubobject<클래스명>("이름")` 형태로 사용합니다.
+  - 지정한 클래스의 컴포넌트를 생성하여 붙이며, 생성자에서만 호출할 수 있습니다.
+
+  </Card>
+  <Card title="TEXT()">유니코드를 포함한 문자열 리터럴을 만들 때 사용하는 매크로입니다.</Card>
+  <Card title="SetRootComponent()">이 액터에서 어떤 컴포넌트를 RootComponent로 삼을지 설정합니다.</Card>
+  <Card title="FObjectFinder">`ConstructorHelpers::FObjectFinder<클래스명>` 형태로, 경로를 기반으로 에셋을 찾는 헬퍼 타입입니다.</Card>
+  <Card title="SetStaticMesh()">StaticMeshComponent가 표시할 StaticMesh를 설정합니다.</Card>
+</CardGrid>
+
+### 빌드하고 배치하기
+
+코드를 모두 작성했다면 언리얼 에디터를 종료한 뒤, Visual Studio에서 빌드(<kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>B</kbd>)하고 실행(<kbd>F5</kbd>)합니다. (에디터를 꺼야 하는 이유는 이 챕터 뒤에서 설명합니다.)
+
+다시 열린 에디터에서 Content Drawer를 켜면 C++ Classes 폴더가 추가된 것을 볼 수 있습니다. 프로젝트명 → Public → Item → Item 을 뷰포트로 드래그 앤 드롭하면, 블루프린트와 똑같이 작동하는 것을 확인할 수 있습니다.
+
+:::tip[핵심 체크]
+Root 생성 → Mesh 부착 → Mesh 에셋 지정 순서만 맞으면, C++ Actor도 블루프린트와 동일한 형태로 레벨에 배치됩니다.
+:::
+
+<Figure src="/images/ch3/2/10-cpp-item-class.png" alt="레벨에 배치된 C++ Item 액터" caption="블루프린트와 동일하게 작동하는 C++ Item 액터" />
+
+## 블루프린트? C++? 무엇을 선택할까
+
+여기서 자연스럽게 떠오르는 질문은 "그럼 어떤 상황에 무엇을 사용하나요?"일 것입니다.
+
+결론부터 말하면, 지금과 같은 작업은 **블루프린트에서 하는 것이 훨씬 좋습니다.** 그 이유는 다음과 같습니다.
+
+<CardGrid>
+  <Card title="작업의 복잡성">C++로 작성할 때는 에셋 경로를 직접 문자열로 가져와야 했습니다. 블루프린트에서는 드롭다운 버튼만으로 간단히 수정할 수 있으므로, 굳이 경로까지 직접 구해 가며 코드로 작성하는 것은 비효율적입니다.</Card>
+  <Card title="협업의 문제">언리얼 엔진은 프로그래머뿐 아니라 디자이너도 함께 사용하는 도구입니다. 디자이너가 Static Mesh만 간단히 바꾸고 싶을 때조차 C++ 코드를 이해해야 한다면, 협업에 큰 부담이 됩니다.</Card>
+</CardGrid>
+
+이러한 이유로 C++에서 모든 것을 처리하는 것은 비효율적이며, 일반적으로는 C++과 블루프린트를 혼용하는 방식을 사용합니다. 즉, C++에서 핵심 구현을 작성하고, 블루프린트에서 해당 C++ 클래스를 상속하여 세부 값을 조정하는 방식입니다.
+
+기본 컴포넌트를 추가하는 작업도 비용 측면에서는 블루프린트가 유리하지만, 코드에서 특정 컴포넌트를 반드시 활용해야 하거나 컴포넌트의 로직이 무거운 경우에는 C++에서 구현하기도 합니다.
+
+:::tip[실무 패턴]
+실무에서 가장 많이 쓰는 패턴은 **C++ 기반 클래스 + 블루프린트 파생** 조합입니다.
+:::
+
+:::note
+아직 이 내용이 와닿지 않을 수 있습니다. 앞으로의 실습은 C++과 블루프린트를 혼용하는 방식으로 진행하므로, 그 과정에서 천천히 익숙해지면 됩니다.
+:::

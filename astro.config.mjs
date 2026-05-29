@@ -4,7 +4,7 @@ import starlight from '@astrojs/starlight';
 
 // 배포 후 실제 도메인으로 교체하세요. (사이트맵/OG 카드의 절대 URL에 사용됩니다.)
 // 예: 'https://ue-wiki.pages.dev' 또는 커스텀 도메인.
-const SITE_URL = 'https://ue-wiki.pages.dev';
+const SITE_URL = 'https://unreal-wiki.pages.dev';
 
 // https://astro.build/config
 export default defineConfig({

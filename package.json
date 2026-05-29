@@ -10,7 +10,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",
-    "astro": "astro"
+    "astro": "astro",
+    "deploy": "astro build && npx wrangler pages deploy dist --project-name=unreal-wiki --branch=main --commit-dirty=true"
   },
   "dependencies": {
     "@astrojs/starlight": "^0.39.2",

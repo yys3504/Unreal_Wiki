@@ -27,6 +27,8 @@ export default defineConfig({
             href: 'https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable.css',
           },
         },
+        // Figure 이미지 클릭 확대(라이트박스) — 페이지당 1회 로드. 로직은 public/js/figure-lightbox.js.
+        { tag: 'script', attrs: { src: '/js/figure-lightbox.js', defer: true } },
       ],
       customCss: ['./src/styles/custom.css'],
       // 좌측 사이드바 = 정보구조(IA)의 번호 섹션 00~90과 1:1.

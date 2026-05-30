@@ -39,15 +39,15 @@ Content Drawer에서 **Item**이라는 폴더를 만든 뒤, 그 안에서 우�
 | USceneComponent | UActorComponent | O | X | 계층 구조의 시작. 트랜스폼 정보를 가져 월드 내 좌표를 가지며, 다른 컴포넌트를 자식으로 부착(Attach)할 수 있음 |
 | UPrimitiveComponent | USceneComponent | O | O | 물리 및 렌더링 담당. 메시를 그리거나 충돌(Collision)을 처리하는 모든 컴포넌트의 부모 |
 
-여기서 DefaultSceneRoot는 USceneComponent를 의미합니다. 앞에서 Actor는 Transform을 가진다고 설명했지만, 사실은 이 SceneComponent를 가지고 있기 때문에 트랜스폼을 가지는 것입니다.
+여기서 DefaultSceneRoot는 USceneComponent를 의미합니다. 앞에서 Actor는 Transform을 가진다고 설명했지만, 사실은 **이 SceneComponent를 가지고 있기 때문에 트랜스폼을 가지는 것**입니다.
 
 :::note
-뒤에서 자세히 설명하겠지만, C++로 Actor를 추가하면 SceneComponent가 자동으로 붙지 않습니다. 이 차이는 C++ 실습에서 다시 확인하게 됩니다.
+뒤에서 자세히 설명하겠지만, **C++로 Actor를 추가하면 SceneComponent가 자동으로 붙지 않습니다.** 이 차이는 C++ 실습에서 다시 확인하게 됩니다.
 :::
 
 또한 Actor는 최소한 1개의 컴포넌트를 가져야 하며, 컴포넌트 계층의 중심이 되는 **RootComponent**가 반드시 있어야 합니다. 블루프린트에서는 DefaultSceneRoot라는 SceneComponent가 곧 RootComponent가 됩니다.
 
-그런데 이 상태로는 Transform만 가지는 빈 껍데기 클래스에 불과합니다. 그래서 이 액터에 시각적으로 눈에 보이는 메시(Mesh)를 부여하는 StaticMeshComponent를 추가해 보겠습니다.
+그런데 이 상태로는 Transform만 가지는 빈 껍데기 클래스에 불과합니다. 그래서 이 액터에 시각적으로 눈에 보이는 **메시(Mesh)** 를 부여하는 **StaticMeshComponent**를 추가해 보겠습니다.
 
 ### StaticMeshComponent 추가하기
 
@@ -114,7 +114,7 @@ C++ 프로젝트를 경험해 보신 분이라면 아시겠지만, 보통 C++에
   <Card title="Class Type: Private">Item.h와 Item.cpp 모두 Private 폴더로 배치됩니다.</Card>
 </CardGrid>
 
-Private 폴더에 있는 헤더는 외부 모듈에서 Include 할 수 없습니다. 따라서 단순한 프로젝트에서는 헤더를 어디서든 참조할 수 있도록 Class Type을 Public으로 지정하는 편입니다.
+**Private 폴더에 있는 헤더는 외부 모듈에서 Include 할 수 없습니다.** 따라서 단순한 프로젝트에서는 헤더를 어디서든 참조할 수 있도록 **Class Type을 Public으로 지정**하는 편입니다.
 
 ### 생성된 헤더 코드 살펴보기
 
@@ -161,7 +161,7 @@ public:
 
 ### 컴포넌트 선언하기
 
-이제 블루프린트에서 했던 것처럼 코드를 직접 고쳐 보겠습니다. C++에서는 SceneComponent를 자동으로 생성해 주지 않으므로, SceneComponent를 추가하고 더불어 StaticMeshComponent도 함께 추가하겠습니다. (클래스 내부에서 핵심 내용만 다룹니다.)
+이제 블루프린트에서 했던 것처럼 코드를 직접 고쳐 보겠습니다. **C++에서는 SceneComponent를 자동으로 생성해 주지 않으므로**, SceneComponent를 추가하고 더불어 StaticMeshComponent도 함께 추가하겠습니다. (클래스 내부에서 핵심 내용만 다룹니다.)
 
 클래스 내부 핵심 선언은 다음과 같습니다.
 
@@ -235,7 +235,7 @@ Root 생성 → Mesh 부착 → Mesh 에셋 지정 순서만 맞으면, C++ Acto
   <Card title="협업의 문제">언리얼 엔진은 프로그래머뿐 아니라 디자이너도 함께 사용하는 도구입니다. 디자이너가 Static Mesh만 간단히 바꾸고 싶을 때조차 C++ 코드를 이해해야 한다면, 협업에 큰 부담이 됩니다.</Card>
 </CardGrid>
 
-이러한 이유로 C++에서 모든 것을 처리하는 것은 비효율적이며, 일반적으로는 C++과 블루프린트를 혼용하는 방식을 사용합니다. 즉, C++에서 핵심 구현을 작성하고, 블루프린트에서 해당 C++ 클래스를 상속하여 세부 값을 조정하는 방식입니다.
+이러한 이유로 C++에서 모든 것을 처리하는 것은 비효율적이며, 일반적으로는 **C++과 블루프린트를 혼용하는 방식**을 사용합니다. 즉, C++에서 핵심 구현을 작성하고, 블루프린트에서 해당 C++ 클래스를 상속하여 세부 값을 조정하는 방식입니다.
 
 기본 컴포넌트를 추가하는 작업도 비용 측면에서는 블루프린트가 유리하지만, 코드에서 특정 컴포넌트를 반드시 활용해야 하거나 컴포넌트의 로직이 무거운 경우에는 C++에서 구현하기도 합니다.
 
